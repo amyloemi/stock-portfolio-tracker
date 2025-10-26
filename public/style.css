@@ -1409,8 +1409,17 @@ footer p {
         border-radius: 16px;
     }
 
+    .portfolio-info {
+        text-align: center;
+    }
+
+    .portfolio-title-row {
+        justify-content: center;
+    }
+
     .portfolio-value-display {
         font-size: 2.2rem;
+        text-align: center;
     }
 
     #portfolio-currency-label {
@@ -1419,6 +1428,7 @@ footer p {
 
     .portfolio-change {
         font-size: 1rem;
+        text-align: center;
     }
 
     .portfolio-breakdown {
@@ -1596,13 +1606,24 @@ footer p {
 
     .card-detail-value.dual-currency {
         display: flex;
-        flex-direction: column;
-        gap: 2px;
+        flex-direction: row;
+        gap: 6px;
+        align-items: baseline;
+        flex-wrap: wrap;
     }
 
     .card-detail-value .cad-value-small {
         font-size: 0.8rem;
         color: #64748b;
+        font-weight: 500;
+    }
+
+    .card-detail-value .cad-value-small::before {
+        content: '(';
+    }
+
+    .card-detail-value .cad-value-small::after {
+        content: ')';
     }
 
     .card-quantity-section {
@@ -1741,10 +1762,29 @@ footer p {
     .refresh-btn {
         padding: 12px 24px;
         font-size: 0.9rem;
+        width: 100%;
+        max-width: 280px;
     }
 
     .action-buttons-container {
         margin-bottom: 15px;
+        display: flex;
+        justify-content: center;
+    }
+
+    /* Footer - Mobile */
+    footer {
+        margin-top: 30px;
+        padding-top: 15px;
+    }
+
+    footer p {
+        font-size: 0.7rem;
+        margin: 3px 0;
+    }
+
+    .api-note {
+        font-size: 0.65rem;
     }
 
     /* Modal - Mobile */

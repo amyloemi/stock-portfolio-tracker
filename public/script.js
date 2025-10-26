@@ -294,14 +294,12 @@ function calculateCurrentPortfolioValue() {
         totalValue = totalValueCAD / usdCadRate;
     }
 
-    console.log('Calculate Portfolio Value - Stocks:', stocksValueCAD.toFixed(2), 'CAD, Cash:', cashInCAD.toFixed(2), 'CAD, Total:', totalValue.toFixed(2), portfolioCurrency);
     return totalValue;
 }
 
 // Portfolio history management - NO backfilling, only saves actual daily snapshots
 // This function does nothing - portfolio history is built organically from daily snapshots
 async function backfillPortfolioHistory() {
-    console.log('Portfolio history will be built from daily snapshots - no backfilling');
     // Portfolio history starts from today and grows organically
     // Each day's snapshot is saved with actual quantities and prices at market close
     // Historical snapshots are NEVER modified when user changes quantities
@@ -335,7 +333,6 @@ function finalizePreviousDays() {
         // If entry is not the current trading day and not already finalized, mark it as finalized
         if (entry.date !== tradingDay && !entry.finalized) {
             entry.finalized = true;
-            console.log('Finalized snapshot for', entry.date, '- Value:', entry.value.toFixed(2));
         }
     });
 }
@@ -351,8 +348,6 @@ function savePortfolioSnapshot() {
     const marketClosed = isMarketClosed();
     const isWeekend = (now.getDay() === 0 || now.getDay() === 6);
 
-    console.log('Saving portfolio snapshot for', tradingDay, '- Value:', totalValueCAD.toFixed(2), '- Market closed:', marketClosed, '- Is weekend:', isWeekend);
-
     // Finalize all previous days' snapshots
     finalizePreviousDays();
 
@@ -361,7 +356,6 @@ function savePortfolioSnapshot() {
 
     // If it's weekend and Friday's snapshot exists and is finalized, don't update it
     if (isWeekend && tradingDayIndex >= 0 && portfolioHistory[tradingDayIndex].finalized) {
-        console.log('Weekend - keeping Friday\'s finalized snapshot unchanged');
         renderPortfolioChart();
         return;
     }
@@ -392,7 +386,6 @@ function savePortfolioSnapshot() {
 
         // Only update if not finalized
         if (!tradingDayEntry.finalized) {
-            console.log('Updating trading day snapshot from', tradingDayEntry.value.toFixed(2), 'to', totalValueCAD.toFixed(2));
             tradingDayEntry.value = totalValueCAD;
             tradingDayEntry.holdings = holdings;
             tradingDayEntry.exchangeRate = usdCadRate;
@@ -401,14 +394,10 @@ function savePortfolioSnapshot() {
             // If market is closed, finalize the snapshot
             if (marketClosed) {
                 tradingDayEntry.finalized = true;
-                console.log('Finalized trading day snapshot at market close');
             }
-        } else {
-            console.log('Trading day snapshot already finalized, not updating');
         }
     } else {
         // Add new entry for the trading day (first snapshot of the day)
-        console.log('Creating new snapshot for trading day');
         portfolioHistory.push({
             date: tradingDay,
             value: totalValueCAD,
@@ -432,13 +421,6 @@ function renderPortfolioChart() {
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
-
-    console.log('=== Portfolio History Chart Data ===');
-    portfolioHistory.forEach((entry, index) => {
-        const date = new Date(entry.date);
-        const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-        console.log(`${dateStr}: $${entry.value.toFixed(2)} - ${entry.finalized ? 'Finalized' : 'Live'}`);
-    });
 
     // Prepare data for chart
     const labels = portfolioHistory.map((entry, index) => {
@@ -805,7 +787,6 @@ function updatePortfolioSummary() {
             const holdingValue = stockData.price * qty;
             const holdingChange = stockData.change * qty;
 
-            console.log(`${item.symbol}: price=${stockData.price}, qty=${qty}, isUSD=${isUSD}, holdingValue=${holdingValue}, rate=${usdCadRate}`);
 
             // Convert USD to CAD for portfolio total
             if (isUSD) {
@@ -835,7 +816,6 @@ function updatePortfolioSummary() {
         totalChange = totalChangeCAD / usdCadRate;
     }
 
-    console.log('Portfolio Summary - Stocks:', stocksValue.toFixed(2), portfolioCurrency, 'Cash:', cashValue.toFixed(2), portfolioCurrency, 'Total:', totalValue.toFixed(2), portfolioCurrency);
 
     // Update display
     stocksValueEl.textContent = stocksValue.toFixed(2);
@@ -1344,13 +1324,6 @@ function showError(message) {
 function showHistoricalPortfolio(dataIndex) {
     const entry = portfolioHistory[dataIndex];
     if (!entry) return;
-
-    console.log('=== Historical Portfolio Details ===');
-    console.log('Date:', entry.date);
-    console.log('Value:', entry.value);
-    console.log('Holdings:', entry.holdings);
-    console.log('Finalized:', entry.finalized);
-    console.log('Current watchlist:', watchlist);
 
     const modal = document.getElementById('historical-portfolio-modal');
     const modalTitle = document.getElementById('modal-title');
