@@ -15,6 +15,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 30px 20px;
+    padding-top: 50px; /* Space for sticky header */
     position: relative;
 }
 
@@ -60,11 +61,11 @@ header h1 {
 .portfolio-summary {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
-    border-radius: 20px;
-    padding: 28px 32px;
-    margin-bottom: 25px;
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
     box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.15),
+        0 15px 45px rgba(0, 0, 0, 0.12),
         0 0 0 1px rgba(255, 255, 255, 0.1) inset;
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
@@ -109,13 +110,13 @@ header h1 {
 }
 
 .portfolio-value-display {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 800;
     background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     line-height: 1.1;
 }
 
@@ -124,7 +125,7 @@ header h1 {
 }
 
 .portfolio-change {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: #64748b;
 }
@@ -139,21 +140,21 @@ header h1 {
 
 .portfolio-info {
     text-align: center;
-    margin-bottom: 18px;
+    margin-bottom: 12px;
 }
 
 .portfolio-breakdown {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    padding-top: 18px;
-    margin-top: 18px;
+    gap: 10px;
+    padding-top: 12px;
+    margin-top: 12px;
     border-top: 1px solid rgba(100, 116, 139, 0.1);
 }
 
 .breakdown-item {
     background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
-    padding: 12px 14px;
+    padding: 10px 12px;
     border-radius: 10px;
     backdrop-filter: blur(10px);
 }
@@ -445,6 +446,7 @@ header h1 {
         0 0 0 1px rgba(255, 255, 255, 0.1) inset;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
 }
 
@@ -460,6 +462,32 @@ header h1 {
 
 .refresh-btn:active .refresh-icon {
     transform: rotate(180deg);
+}
+
+/* Floating Refresh Button */
+.refresh-btn-floating {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    padding: 0;
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    z-index: 1000;
+}
+
+.refresh-btn-floating .refresh-icon {
+    font-size: 1.5rem;
+}
+
+.refresh-btn-floating:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(99, 102, 241, 0.5);
+}
+
+.refresh-btn-floating:active {
+    transform: scale(0.95);
 }
 
 .section-title {
@@ -558,24 +586,28 @@ header h1 {
 }
 
 .clear-data-btn {
-    background: rgba(231, 76, 60, 0.1);
-    color: #e74c3c;
-    border: 2px solid rgba(231, 76, 60, 0.3);
-    padding: 8px 20px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: 500;
+    background: rgba(148, 163, 184, 0.1);
+    color: #94a3b8;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    padding: 14px 32px;
+    border-radius: 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
+    box-shadow: none;
 }
 
 .clear-data-btn:hover {
-    background: rgba(231, 76, 60, 0.15);
-    border-color: rgba(231, 76, 60, 0.5);
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.3);
     transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.15);
 }
 
 .clear-icon {
@@ -1074,6 +1106,25 @@ header h1 {
     background: linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(124, 58, 237, 0.12) 100%) !important;
 }
 
+/* Status Header - Sticky at top */
+.status-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 8px 16px;
+    font-size: 0.75rem;
+    color: #6366f1;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(99, 102, 241, 0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    font-weight: 600;
+    z-index: 999;
+    letter-spacing: 0.3px;
+}
+
 .loading {
     text-align: center;
     padding: 30px 20px;
@@ -1392,6 +1443,12 @@ footer p {
 @media (max-width: 768px) {
     body {
         padding: 15px 10px;
+        padding-top: 45px; /* Space for sticky header on mobile */
+    }
+
+    .status-header {
+        font-size: 0.7rem;
+        padding: 7px 12px;
     }
 
     .container {
@@ -1404,46 +1461,60 @@ footer p {
 
     /* Portfolio Summary - Mobile */
     .portfolio-summary {
-        padding: 24px 18px;
-        border-radius: 16px;
+        padding: 16px 14px;
+        border-radius: 14px;
+        margin-bottom: 16px;
     }
 
     .portfolio-info {
         text-align: center;
+        margin-bottom: 10px;
     }
 
     .portfolio-title-row {
         justify-content: center;
+        margin-bottom: 6px;
+    }
+
+    .portfolio-title {
+        font-size: 0.85rem;
+        margin-bottom: 0;
     }
 
     .portfolio-value-display {
-        font-size: 2.2rem;
+        font-size: 1.8rem;
         text-align: center;
         display: block;
         width: 100%;
+        margin-bottom: 4px;
     }
 
     .portfolio-change {
-        font-size: 1rem;
+        font-size: 0.9rem;
         text-align: center;
         display: block;
         width: 100%;
-        margin-top: 8px;
+        margin-top: 0;
     }
 
     .portfolio-breakdown {
         grid-template-columns: 1fr;
-        gap: 12px;
-        padding-top: 18px;
-        margin-top: 18px;
+        gap: 8px;
+        padding-top: 10px;
+        margin-top: 10px;
+        border-top: 1px solid #e5e7eb;
     }
 
     .breakdown-item {
-        padding: 12px 14px;
+        padding: 8px 10px;
+    }
+
+    .breakdown-label {
+        font-size: 0.7rem;
     }
 
     .breakdown-value {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
     }
 
     /* Chart - Mobile */
@@ -1474,9 +1545,9 @@ footer p {
 
     .stock-card {
         background: white;
-        border-radius: 14px;
-        padding: 18px;
-        margin-bottom: 12px;
+        border-radius: 12px;
+        padding: 14px;
+        margin-bottom: 10px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
         border: 1px solid #e5e7eb;
         transition: all 0.3s ease;
@@ -1492,32 +1563,69 @@ footer p {
         border: 2px solid #27ae60;
     }
 
+    .cash-balance-value {
+        color: #27ae60 !important;
+        font-size: 1.6rem !important;
+        font-weight: 800 !important;
+    }
+
+    .cash-balance-input {
+        width: 150px !important;
+        min-width: 150px !important;
+        padding: 12px 14px !important;
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+        border: 2px solid #27ae60 !important;
+        background: white !important;
+        -webkit-appearance: none;
+        appearance: none;
+    }
+
+    .cash-currency-select {
+        width: 85px;
+        min-width: 85px;
+        padding: 12px 10px !important;
+        font-size: 0.95rem !important;
+        font-weight: 600 !important;
+        border: 2px solid #27ae60 !important;
+        background: white !important;
+    }
+
+    .card-quantity-row {
+        flex-wrap: wrap;
+    }
+
+    .card-quantity-input {
+        flex: 1;
+        min-width: 240px;
+    }
+
     .card-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 14px;
+        margin-bottom: 10px;
         padding-bottom: 0;
     }
 
     .card-symbol {
         display: flex;
         flex-direction: column;
-        gap: 3px;
+        gap: 2px;
         flex: 1;
     }
 
     .card-symbol-name {
-        font-size: 1.15rem;
+        font-size: 1.05rem;
         font-weight: 700;
         color: #1e293b;
         display: flex;
         align-items: center;
-        gap: 5px;
+        gap: 4px;
     }
 
     .card-symbol-subtext {
-        font-size: 0.68rem;
+        font-size: 0.65rem;
         color: #64748b;
         font-weight: 500;
     }
@@ -1527,11 +1635,11 @@ footer p {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-        gap: 3px;
+        gap: 2px;
     }
 
     .card-price {
-        font-size: 1.35rem;
+        font-size: 1.25rem;
         font-weight: 700;
         color: #1e293b;
         line-height: 1;
@@ -1578,21 +1686,23 @@ footer p {
     .card-details {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 12px;
-        margin-bottom: 14px;
+        gap: 8px;
+        margin-bottom: 10px;
     }
 
     .card-detail-item {
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: 4px;
         background: #f8fafc;
-        padding: 12px 14px;
+        padding: 10px 12px;
         border-radius: 8px;
+        align-items: flex-start;
+        text-align: left;
     }
 
     .card-detail-label {
-        font-size: 0.7rem;
+        font-size: 0.65rem;
         color: #64748b;
         font-weight: 600;
         text-transform: uppercase;
@@ -1600,7 +1710,7 @@ footer p {
     }
 
     .card-detail-value {
-        font-size: 1rem;
+        font-size: 0.95rem;
         font-weight: 600;
         color: #1e293b;
     }
@@ -1613,28 +1723,29 @@ footer p {
     }
 
     .card-detail-value .cad-value-small {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         color: #64748b;
         font-weight: 500;
     }
 
     .card-quantity-section {
         background: #fff;
-        border-radius: 10px;
+        border-radius: 8px;
         padding: 0;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
         border: 1px solid #e5e7eb;
     }
 
     .card-quantity-row {
         display: flex;
         align-items: center;
-        gap: 10px;
-        padding: 12px 14px;
+        justify-content: center;
+        gap: 8px;
+        padding: 10px 12px;
     }
 
     .card-quantity-label {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         font-weight: 600;
         color: #475569;
         flex-shrink: 0;
@@ -1644,7 +1755,6 @@ footer p {
         display: flex;
         align-items: center;
         gap: 6px;
-        margin-left: auto;
     }
 
     .quantity-input-field {
@@ -1666,34 +1776,34 @@ footer p {
 
     .card-actions {
         display: flex;
-        gap: 8px;
+        gap: 6px;
     }
 
     .remove-btn, .pin-btn {
         flex: 1;
-        padding: 9px 14px;
-        font-size: 0.85rem;
-        border-radius: 8px;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+        border-radius: 6px;
         font-weight: 600;
     }
 
     .card-high-low {
         display: flex;
         justify-content: space-between;
-        padding: 10px;
-        margin: 10px 0;
+        padding: 8px;
+        margin: 8px 0;
         background: #f8fafc;
-        border-radius: 8px;
+        border-radius: 6px;
     }
 
     .high-low-item {
         display: flex;
         flex-direction: column;
-        gap: 3px;
+        gap: 2px;
     }
 
     .high-low-label {
-        font-size: 0.65rem;
+        font-size: 0.62rem;
         color: #64748b;
         text-transform: uppercase;
         font-weight: 600;
@@ -1701,7 +1811,7 @@ footer p {
     }
 
     .high-low-value {
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         font-weight: 600;
     }
 
@@ -1751,26 +1861,15 @@ footer p {
     }
 
     /* Buttons - Mobile */
-    .refresh-btn {
-        padding: 16px 32px;
-        font-size: 0.95rem;
-        font-weight: 700;
-        width: calc(100% - 40px);
-        max-width: 340px;
-        margin: 0 auto;
-        border-radius: 16px;
-        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
-        gap: 10px;
+    .refresh-btn-floating {
+        top: 16px;
+        right: 16px;
+        width: 52px;
+        height: 52px;
     }
 
-    .refresh-btn:active {
-        transform: scale(0.98);
-    }
-
-    .action-buttons-container {
-        margin: 0 20px 24px 20px;
-        display: flex;
-        justify-content: center;
+    .refresh-btn-floating .refresh-icon {
+        font-size: 1.4rem;
     }
 
     /* Footer - Mobile */
@@ -1818,17 +1917,18 @@ footer p {
 
     /* Data Management - Mobile */
     .clear-data-btn {
-        padding: 8px 16px;
-        font-size: 0.85rem;
-    }
-
-    /* Footer - Mobile */
-    footer {
-        margin-top: 30px;
-        font-size: 0.8rem;
-    }
-
-    .api-note {
+        padding: 10px 20px;
         font-size: 0.75rem;
+        font-weight: 600;
+        width: auto;
+        max-width: 280px;
+        margin: 0 auto;
+        border-radius: 12px;
+    }
+
+    .data-management-section {
+        margin: 0 20px 24px 20px;
+        display: flex;
+        justify-content: center;
     }
 }

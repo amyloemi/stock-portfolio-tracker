@@ -568,12 +568,13 @@ async function addStockOrCash() {
     } else {
         // Add stock - validate symbol first
         try {
-            loadingEl.style.display = 'block';
+            loadingEl.textContent = 'Validating...';
             const response = await fetch(`/api/stock/${inputUpper}`);
-            loadingEl.style.display = 'none';
 
             if (!response.ok) {
                 showError(`Invalid stock symbol: ${inputUpper}`);
+                const now = new Date();
+                loadingEl.textContent = `Last updated: ${now.toLocaleTimeString()}`;
                 return;
             }
 
@@ -581,6 +582,8 @@ async function addStockOrCash() {
             const existing = watchlist.find(item => item.symbol === inputUpper);
             if (existing) {
                 showError(`${inputUpper} is already in your watchlist`);
+                const now = new Date();
+                loadingEl.textContent = `Last updated: ${now.toLocaleTimeString()}`;
                 return;
             }
 
@@ -590,7 +593,8 @@ async function addStockOrCash() {
             renderStocks();
             showError(''); // Clear any previous errors
         } catch (error) {
-            loadingEl.style.display = 'none';
+            const now = new Date();
+            loadingEl.textContent = `Last updated: ${now.toLocaleTimeString()}`;
             showError(`Failed to add stock: ${inputUpper}`);
         }
     }
@@ -730,7 +734,7 @@ async function fetchAndRenderStocks() {
         return;
     }
 
-    loadingEl.style.display = 'block';
+    loadingEl.textContent = 'Updating...';
     errorEl.style.display = 'none';
     emptyState.style.display = 'none';
 
@@ -765,10 +769,13 @@ async function fetchAndRenderStocks() {
             savePortfolioSnapshot();
         });
 
-        loadingEl.style.display = 'none';
+        // Update last refresh time
+        const now = new Date();
+        const timeString = now.toLocaleTimeString();
+        loadingEl.textContent = `Last updated: ${timeString}`;
     } catch (error) {
         console.error('Error:', error);
-        loadingEl.style.display = 'none';
+        loadingEl.textContent = 'Update failed';
         showError('Failed to load stock data. Please try again.');
     }
 }
@@ -820,11 +827,12 @@ function updatePortfolioSummary() {
     // Update display
     stocksValueEl.textContent = stocksValue.toFixed(2);
     cashDisplayEl.textContent = cashValue.toFixed(2);
-    portfolioValueEl.textContent = totalValue.toFixed(2);
+    const currencyPrefix = portfolioCurrency === 'USD' ? 'US' : 'CA';
+    portfolioValueEl.textContent = `${currencyPrefix}$${totalValue.toFixed(2)}`;
 
     const changeSign = totalChange >= 0 ? '+' : '';
     const colorClass = totalChange >= 0 ? 'positive' : 'negative';
-    portfolioChangeEl.textContent = `${changeSign}$${totalChange.toFixed(2)} ${portfolioCurrency}`;
+    portfolioChangeEl.textContent = `${changeSign}$${totalChange.toFixed(2)}`;
     portfolioChangeEl.className = `portfolio-change ${colorClass}`;
 }
 
@@ -998,10 +1006,10 @@ function createStockRow(stock, watchlistItem) {
     if (qty > 0) {
         if (isUSD) {
             // Show both USD and CAD on same line
-            holdingsHTML = `$${holdingValueUSD.toFixed(2)} USD <span class="cad-value-small">($${holdingValueCAD.toFixed(2)} CAD)</span>`;
+            holdingsHTML = `US$${holdingValueUSD.toFixed(2)} <span class="cad-value-small">(CA$${holdingValueCAD.toFixed(2)})</span>`;
         } else {
             // Show only CAD
-            holdingsHTML = `$${holdingValueUSD.toFixed(2)} CAD`;
+            holdingsHTML = `CA$${holdingValueUSD.toFixed(2)}`;
         }
     } else {
         holdingsHTML = '-';
@@ -1024,15 +1032,15 @@ function createStockRow(stock, watchlistItem) {
         if (isUSD) {
             highLowHTML = `
                 <div class="high-low-values">
-                    <div class="high-value">H: $${highValue.toFixed(2)} USD <span class="percent-change">(${highPercentSign}${highPercent.toFixed(2)}%)</span></div>
-                    <div class="low-value">L: $${lowValue.toFixed(2)} USD <span class="percent-change">(${lowPercentSign}${lowPercent.toFixed(2)}%)</span></div>
+                    <div class="high-value">H: US$${highValue.toFixed(2)} <span class="percent-change">(${highPercentSign}${highPercent.toFixed(2)}%)</span></div>
+                    <div class="low-value">L: US$${lowValue.toFixed(2)} <span class="percent-change">(${lowPercentSign}${lowPercent.toFixed(2)}%)</span></div>
                 </div>
             `;
         } else {
             highLowHTML = `
                 <div class="high-low-values">
-                    <div class="high-value">H: $${highValue.toFixed(2)} CAD <span class="percent-change">(${highPercentSign}${highPercent.toFixed(2)}%)</span></div>
-                    <div class="low-value">L: $${lowValue.toFixed(2)} CAD <span class="percent-change">(${lowPercentSign}${lowPercent.toFixed(2)}%)</span></div>
+                    <div class="high-value">H: CA$${highValue.toFixed(2)} <span class="percent-change">(${highPercentSign}${highPercent.toFixed(2)}%)</span></div>
+                    <div class="low-value">L: CA$${lowValue.toFixed(2)} <span class="percent-change">(${lowPercentSign}${lowPercent.toFixed(2)}%)</span></div>
                 </div>
             `;
         }
@@ -1051,7 +1059,7 @@ function createStockRow(stock, watchlistItem) {
 
     row.innerHTML = `
         <td class="symbol-cell">${symbolDisplay}</td>
-        <td class="price-cell">$${stock.price.toFixed(2)} ${isUSD ? 'USD' : 'CAD'}</td>
+        <td class="price-cell">${isUSD ? 'US' : 'CA'}$${stock.price.toFixed(2)}</td>
         <td class="${colorClass}">${changeSign}$${stock.change.toFixed(2)}</td>
         <td class="${colorClass}">${changeSign}${stock.changePercent.toFixed(2)}%</td>
         <td class="quantity-cell">
@@ -1147,28 +1155,28 @@ function createMobileStockCard(stock, watchlistItem) {
         if (isUSD) {
             holdingsDisplay = `
                 <div class="dual-currency">
-                    <div>$${holdingValueUSD.toFixed(2)} USD</div>
-                    <div class="cad-value-small">$${holdingValueCAD.toFixed(2)} CAD</div>
+                    <div>US$${holdingValueUSD.toFixed(2)}</div>
+                    <div class="cad-value-small">CA$${holdingValueCAD.toFixed(2)}</div>
                 </div>
             `;
         } else {
-            holdingsDisplay = `$${holdingValueUSD.toFixed(2)} CAD`;
+            holdingsDisplay = `CA$${holdingValueUSD.toFixed(2)}`;
         }
     }
 
     // High/Low values
     let highLowDisplay = '';
     if (stock.dayHigh && stock.dayLow) {
-        const currency = isUSD ? 'USD' : 'CAD';
+        const currencyPrefix = isUSD ? 'US' : 'CA';
         highLowDisplay = `
             <div class="card-high-low">
                 <div class="high-low-item">
                     <span class="high-low-label">Day High</span>
-                    <span class="high-low-value high">$${stock.dayHigh.toFixed(2)} ${currency}</span>
+                    <span class="high-low-value high">${currencyPrefix}$${stock.dayHigh.toFixed(2)}</span>
                 </div>
                 <div class="high-low-item">
                     <span class="high-low-label">Day Low</span>
-                    <span class="high-low-value low">$${stock.dayLow.toFixed(2)} ${currency}</span>
+                    <span class="high-low-value low">${currencyPrefix}$${stock.dayLow.toFixed(2)}</span>
                 </div>
             </div>
         `;
@@ -1186,7 +1194,7 @@ function createMobileStockCard(stock, watchlistItem) {
                 <div class="card-symbol-subtext">${isUSD ? 'USD Stock' : 'CAD Stock'}</div>
             </div>
             <div class="card-price-section">
-                <div class="card-price">$${stock.price.toFixed(2)}</div>
+                <div class="card-price">${isUSD ? 'US' : 'CA'}$${stock.price.toFixed(2)}</div>
                 <div class="card-change-row">
                     <span class="card-change ${colorClass}">${changeSign}$${stock.change.toFixed(2)}</span>
                     <span class="card-percent ${colorClass}">${changeSign}${stock.changePercent.toFixed(2)}%</span>
@@ -1242,6 +1250,7 @@ function createMobileCashCard(pocket) {
 
     const balance = Math.max(0, pocket.balance);
     const balanceInCAD = pocket.currency === 'USD' ? balance * usdCadRate : balance;
+    const currencyPrefix = pocket.currency === 'USD' ? 'US' : 'CA';
 
     card.innerHTML = `
         <div class="card-header">
@@ -1250,8 +1259,8 @@ function createMobileCashCard(pocket) {
                 <div class="card-symbol-subtext">Cash Pocket</div>
             </div>
             <div class="card-price-section">
-                <div class="card-price" style="color: #27ae60;">$${balanceInCAD.toFixed(2)}</div>
-                <div class="card-symbol-subtext">CAD Value</div>
+                <div class="card-price cash-balance-value">${currencyPrefix}$${balance.toFixed(2)}</div>
+                ${pocket.currency === 'USD' ? `<div class="card-symbol-subtext" style="color: #27ae60;">≈ CA$${balanceInCAD.toFixed(2)}</div>` : ''}
             </div>
         </div>
 
@@ -1262,13 +1271,13 @@ function createMobileCashCard(pocket) {
                     <input
                         type="number"
                         id="cash-balance-mobile-${pocket.id}"
-                        class="quantity-input-field"
+                        class="quantity-input-field cash-balance-input"
                         value="${balance > 0 ? balance.toFixed(2) : ''}"
                         placeholder="0.00"
                         min="0"
                         step="0.01"
                     />
-                    <select id="cash-currency-mobile-${pocket.id}" style="padding: 8px 12px; border-radius: 8px; border: 2px solid #e2e8f0; font-size: 1rem;">
+                    <select id="cash-currency-mobile-${pocket.id}" class="cash-currency-select" style="padding: 10px 14px; border-radius: 8px; border: 2px solid #e2e8f0; font-size: 1rem; font-weight: 600;">
                         <option value="CAD" ${pocket.currency === 'CAD' ? 'selected' : ''}>CAD</option>
                         <option value="USD" ${pocket.currency === 'USD' ? 'selected' : ''}>USD</option>
                     </select>
@@ -1296,9 +1305,9 @@ function showEmptyState() {
     });
 
     emptyState.style.display = 'none'; // Don't show empty state text if we have cash pockets
-    loadingEl.style.display = 'none';
-    portfolioValueEl.textContent = '0.00';
-    portfolioChangeEl.textContent = '$0.00 CAD';
+    const currencyPrefix = portfolioCurrency === 'USD' ? 'US' : 'CA';
+    portfolioValueEl.textContent = `${currencyPrefix}$0.00`;
+    portfolioChangeEl.textContent = '$0.00';
     portfolioChangeEl.className = 'portfolio-change';
 }
 
@@ -1531,13 +1540,14 @@ function resetAndBackfill() {
             }
 
             // Trigger backfill
-            loadingEl.style.display = 'block';
+            loadingEl.textContent = 'Backfilling history...';
             try {
                 await backfillPortfolioHistory();
-                loadingEl.style.display = 'none';
+                const now = new Date();
+                loadingEl.textContent = `Last updated: ${now.toLocaleTimeString()}`;
                 alert('✅ Portfolio history has been reset and backfilled successfully!');
             } catch (error) {
-                loadingEl.style.display = 'none';
+                loadingEl.textContent = 'Backfill failed';
                 showError('Failed to backfill portfolio history. Please try again.');
             }
         }

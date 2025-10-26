@@ -17,6 +17,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 <body>
+    <!-- Status Header -->
+    <div id="loading" class="status-header">Last updated: Never</div>
+
     <div class="container">
         <!-- Portfolio Summary -->
         <div class="portfolio-summary">
@@ -45,8 +48,7 @@
             </div>
         </div>
 
-        <!-- Loading and Error States -->
-        <div id="loading" class="loading" style="display: none;">Loading stocks...</div>
+        <!-- Error State -->
         <div id="error" class="error" style="display: none;"></div>
 
         <!-- Stocks Table (Desktop) -->
@@ -124,12 +126,9 @@
             <p>Add some stocks above to get started!</p>
         </div>
 
-        <div class="action-buttons-container">
-            <button id="refresh-all-btn" class="refresh-btn">
-                <span class="refresh-icon">🔄</span>
-                Refresh All Prices
-            </button>
-        </div>
+        <button id="refresh-all-btn" class="refresh-btn refresh-btn-floating">
+            <span class="refresh-icon">🔄</span>
+        </button>
 
         <!-- Portfolio History Chart -->
         <div class="chart-container">
