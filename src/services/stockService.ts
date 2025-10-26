@@ -29,7 +29,7 @@ export async function getStockPrice(symbol: string): Promise<StockData> {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data = await response.json();
+    const data = await response.json() as any;
 
     // Check if we got valid data
     if (!data.chart?.result?.[0]) {
@@ -38,7 +38,6 @@ export async function getStockPrice(symbol: string): Promise<StockData> {
 
     const result = data.chart.result[0];
     const meta = result.meta;
-    const quote = result.indicators?.quote?.[0];
 
     // Get current price (regularMarketPrice)
     const currentPrice = meta.regularMarketPrice ?? meta.previousClose ?? 0;
@@ -94,7 +93,7 @@ export async function getHistoricalPrices(symbol: string, days: number = 30): Pr
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data = await response.json();
+    const data = await response.json() as any;
 
     if (!data.chart?.result?.[0]) {
       throw new Error('Invalid response from Yahoo Finance');

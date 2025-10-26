@@ -21,10 +21,10 @@ app.get('/api/stock/:symbol', async (req, res) => {
       return res.status(400).json({ error: 'Stock symbol is required' });
     }
     const stockData = await getStockPrice(symbol);
-    res.json(stockData);
+    return res.json(stockData);
   } catch (error) {
     console.error('Error fetching stock data:', error);
-    res.status(500).json({ error: 'Failed to fetch stock data' });
+    return res.status(500).json({ error: 'Failed to fetch stock data' });
   }
 });
 
@@ -39,30 +39,30 @@ app.post('/api/stocks', async (req, res) => {
 
     // Fetch all stocks in parallel
     const stockPromises = symbols.map(symbol =>
-      getStockPrice(symbol.toUpperCase()).catch(error => ({
+      getStockPrice(symbol.toUpperCase()).catch(() => ({
         symbol: symbol.toUpperCase(),
         error: 'Failed to fetch',
       }))
     );
 
     const stocksData = await Promise.all(stockPromises);
-    res.json(stocksData);
+    return res.json(stocksData);
   } catch (error) {
     console.error('Error fetching stocks data:', error);
-    res.status(500).json({ error: 'Failed to fetch stocks data' });
+    return res.status(500).json({ error: 'Failed to fetch stocks data' });
   }
 });
 
 // API endpoint to get USD/CAD exchange rate
-app.get('/api/exchange-rate/usd-cad', async (req, res) => {
+app.get('/api/exchange-rate/usd-cad', async (_req, res) => {
   try {
     // Using Yahoo Finance to get USDCAD=X exchange rate
     const stockData = await getStockPrice('USDCAD=X');
-    res.json({ rate: stockData.price });
+    return res.json({ rate: stockData.price });
   } catch (error) {
     console.error('Error fetching exchange rate:', error);
     // Return a fallback rate
-    res.json({ rate: 1.37 }); // Approximate fallback
+    return res.json({ rate: 1.37 }); // Approximate fallback
   }
 });
 
@@ -82,10 +82,10 @@ app.post('/api/historical-prices', async (req, res) => {
     });
 
     const historicalData = await Promise.all(historicalPromises);
-    res.json(historicalData);
+    return res.json(historicalData);
   } catch (error) {
     console.error('Error fetching historical prices:', error);
-    res.status(500).json({ error: 'Failed to fetch historical prices' });
+    return res.status(500).json({ error: 'Failed to fetch historical prices' });
   }
 });
 
