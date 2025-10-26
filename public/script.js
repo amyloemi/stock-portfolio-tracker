@@ -637,11 +637,11 @@ function loadWatchlist() {
             }));
         }
     } else {
-        // Default watchlist - all as watch-only
+        // Default watchlist with quantity 0
         watchlist = [
-            { symbol: 'TSLA', quantity: 0, isWatchOnly: true },
-            { symbol: 'AAPL', quantity: 0, isWatchOnly: true },
-            { symbol: 'MSFT', quantity: 0, isWatchOnly: true }
+            { symbol: 'TSLA', quantity: 0, isWatchOnly: false },
+            { symbol: 'AAPL', quantity: 0, isWatchOnly: false },
+            { symbol: 'MSFT', quantity: 0, isWatchOnly: false }
         ];
         saveWatchlist();
     }
@@ -996,12 +996,11 @@ function createStockRow(stock, watchlistItem) {
         }
     }
 
-    // Add watch indicator and pin badge
+    // Add pin badge (no watch badge)
     const symbolBase = stock.symbol;
     const isPinned = watchlistItem.pinned || false;
-    const watchBadge = isWatchOnly ? ` <span class="watch-badge">WATCH</span>` : '';
     const pinBadge = isPinned ? ` <span class="pin-badge">📌</span>` : '';
-    const symbolDisplay = `<span class="clickable-symbol" onclick="openStockNews('${symbolBase}')">${symbolBase}</span>${pinBadge}${watchBadge}`;
+    const symbolDisplay = `<span class="clickable-symbol" onclick="openStockNews('${symbolBase}')">${symbolBase}</span>${pinBadge}`;
 
     // Add pinned class to row
     if (isPinned) {
