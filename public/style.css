@@ -729,6 +729,11 @@ header h1 {
     overflow: hidden;
 }
 
+/* Mobile Cards - Hidden on Desktop */
+.stocks-mobile-cards {
+    display: none;
+}
+
 .stocks-table {
     width: 100%;
     border-collapse: separate;
@@ -1446,85 +1451,242 @@ footer p {
         max-height: 220px;
     }
 
-    /* Table - Mobile */
+    /* Table - Hide on Mobile */
     .stocks-table-container {
-        border-radius: 16px;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
+        display: none;
     }
 
-    .stocks-table {
-        font-size: 0.75rem;
-        min-width: 800px;
+    /* Mobile Card Layout */
+    .stocks-mobile-cards {
+        display: block;
     }
 
-    .stocks-table th,
-    .stocks-table td {
-        padding: 10px 6px;
-        white-space: nowrap;
-    }
-
-    .stocks-table th:first-child,
-    .stocks-table td:first-child {
-        padding-left: 12px;
-        position: sticky;
-        left: 0;
+    .stock-card {
         background: white;
-        z-index: 5;
+        border-radius: 16px;
+        padding: 18px;
+        margin-bottom: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e5e7eb;
+        transition: all 0.3s ease;
     }
 
-    .stocks-table thead th:first-child {
-        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    .stock-card:hover {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        transform: translateY(-2px);
     }
 
-    .stocks-table tbody tr:nth-child(even) td:first-child {
-        background-color: rgba(248, 250, 252, 0.5);
+    .stock-card.cash-card {
+        background: linear-gradient(135deg, #f0f9f4 0%, #e8f5e9 100%);
+        border: 2px solid #27ae60;
     }
 
-    .cash-row td:first-child {
-        background: linear-gradient(135deg, #f0f9f4 0%, #e8f5e9 100%) !important;
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 16px;
+        padding-bottom: 14px;
+        border-bottom: 2px solid #f1f5f9;
     }
 
-    .symbol-cell {
-        font-size: 0.85rem;
-        min-width: 90px;
+    .card-symbol {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
     }
 
-    .price-cell {
+    .card-symbol-name {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #1e293b;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .card-symbol-subtext {
         font-size: 0.75rem;
+        color: #64748b;
+    }
+
+    .card-price-section {
+        text-align: right;
+    }
+
+    .card-price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 4px;
+    }
+
+    .card-change-row {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 2px;
+    }
+
+    .card-change {
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    .card-change.positive {
+        color: #27ae60;
+    }
+
+    .card-change.negative {
+        color: #e74c3c;
+    }
+
+    .card-percent {
+        font-size: 0.8rem;
+        padding: 2px 8px;
+        border-radius: 6px;
+        font-weight: 600;
+    }
+
+    .card-percent.positive {
+        background: #d4edda;
+        color: #27ae60;
+    }
+
+    .card-percent.negative {
+        background: #f8d7da;
+        color: #e74c3c;
+    }
+
+    .card-details {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    .card-detail-item {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .card-detail-label {
+        font-size: 0.75rem;
+        color: #64748b;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .card-detail-value {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #1e293b;
+    }
+
+    .card-detail-value.dual-currency {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .card-detail-value .cad-value-small {
+        font-size: 0.8rem;
+        color: #64748b;
+    }
+
+    .card-quantity-section {
+        background: #f8fafc;
+        border-radius: 12px;
+        padding: 12px;
+        margin-bottom: 14px;
+    }
+
+    .card-quantity-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .card-quantity-label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #475569;
+    }
+
+    .card-quantity-input {
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
 
     .quantity-input-field {
-        width: 50px;
-        padding: 4px 6px;
-        font-size: 0.75rem;
+        width: 70px;
+        padding: 8px 12px;
+        font-size: 1rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        font-weight: 600;
+        text-align: center;
     }
 
-    .remove-btn, .update-btn, .pin-btn {
-        padding: 6px 10px;
+    .update-btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+
+    .card-actions {
+        display: flex;
+        gap: 8px;
+        justify-content: space-between;
+    }
+
+    .remove-btn, .pin-btn {
+        flex: 1;
+        padding: 10px 16px;
+        font-size: 0.9rem;
+        border-radius: 10px;
+        font-weight: 600;
+    }
+
+    .card-high-low {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        margin: 10px 0;
+        border-top: 1px solid #e5e7eb;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .high-low-item {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .high-low-label {
         font-size: 0.7rem;
+        color: #64748b;
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 0.5px;
     }
 
-    .high-low-cell {
-        font-size: 0.7rem;
-        min-width: 120px;
+    .high-low-value {
+        font-size: 1rem;
+        font-weight: 600;
     }
 
-    .high-low-values {
-        gap: 2px;
+    .high-low-value.high {
+        color: #27ae60;
     }
 
-    .percent-change {
-        font-size: 0.65rem;
-    }
-
-    .cad-value, .cad-value-small {
-        font-size: 0.65rem;
-    }
-
-    .dual-currency {
-        font-size: 0.75rem;
-        gap: 2px;
+    .high-low-value.low {
+        color: #e74c3c;
     }
 
     /* Add Stock Form - Mobile */

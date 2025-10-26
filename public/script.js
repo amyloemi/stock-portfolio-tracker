@@ -140,6 +140,26 @@ function updateCashPocketValues(pocketId) {
     }
 }
 
+// Update cash pocket values from mobile card
+function updateCashPocketValuesMobile(pocketId) {
+    const balanceInput = document.getElementById(`cash-balance-mobile-${pocketId}`);
+    const currencySelect = document.getElementById(`cash-currency-mobile-${pocketId}`);
+
+    const pocket = cashPockets.find(p => p.id === pocketId);
+    if (pocket && balanceInput && currencySelect) {
+        const newBalance = Math.max(0, parseFloat(balanceInput.value) || 0);
+        const newCurrency = currencySelect.value;
+
+        pocket.balance = newBalance;
+        pocket.currency = newCurrency;
+
+        saveCashPockets();
+        updatePortfolioSummary();
+        savePortfolioSnapshot();
+        renderStocks();
+    }
+}
+
 // Remove cash pocket
 function removeCashPocket(pocketId) {
     cashPockets = cashPockets.filter(p => p.id !== pocketId);
@@ -612,6 +632,38 @@ addStockInput.addEventListener('keypress', (e) => {
         addStockOrCash();
     }
 });
+
+// Mobile add button
+const addStockBtnMobile = document.getElementById('add-stock-btn-mobile');
+const addStockInputMobile = document.getElementById('add-stock-input-mobile');
+if (addStockBtnMobile) {
+    addStockBtnMobile.addEventListener('click', () => {
+        const symbol = addStockInputMobile.value.trim().toUpperCase();
+        if (symbol) {
+            addStockInputMobile.value = symbol;
+            // Temporarily swap the input references
+            const tempInput = addStockInput.value;
+            addStockInput.value = symbol;
+            addStockOrCash();
+            addStockInput.value = tempInput;
+            addStockInputMobile.value = '';
+        }
+    });
+    addStockInputMobile.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            const symbol = addStockInputMobile.value.trim().toUpperCase();
+            if (symbol) {
+                addStockInputMobile.value = symbol;
+                const tempInput = addStockInput.value;
+                addStockInput.value = symbol;
+                addStockOrCash();
+                addStockInput.value = tempInput;
+                addStockInputMobile.value = '';
+            }
+        }
+    });
+}
+
 refreshAllBtn.addEventListener('click', () => fetchAndRenderStocks());
 portfolioCurrencySelectEl.addEventListener('change', updatePortfolioCurrency);
 
@@ -902,6 +954,10 @@ function updateTableHeaders() {
 // Render stock rows
 function renderStockCards(stocksData) {
     stocksTbody.innerHTML = '';
+    const mobileCardsContainer = document.getElementById('stocks-cards-container');
+    if (mobileCardsContainer) {
+        mobileCardsContainer.innerHTML = '';
+    }
 
     // Separate pinned and unpinned stocks
     const pinnedStocks = watchlist.filter(item => item.pinned);
@@ -913,6 +969,12 @@ function renderStockCards(stocksData) {
         if (stock) {
             const row = createStockRow(stock, watchlistItem);
             stocksTbody.appendChild(row);
+
+            // Also create mobile card
+            if (mobileCardsContainer) {
+                const card = createMobileStockCard(stock, watchlistItem);
+                mobileCardsContainer.appendChild(card);
+            }
         }
     });
 
@@ -922,6 +984,12 @@ function renderStockCards(stocksData) {
         if (stock) {
             const row = createStockRow(stock, watchlistItem);
             stocksTbody.appendChild(row);
+
+            // Also create mobile card
+            if (mobileCardsContainer) {
+                const card = createMobileStockCard(stock, watchlistItem);
+                mobileCardsContainer.appendChild(card);
+            }
         }
     });
 
@@ -929,6 +997,12 @@ function renderStockCards(stocksData) {
     cashPockets.forEach(pocket => {
         const cashRow = createCashPocketRow(pocket);
         stocksTbody.appendChild(cashRow);
+
+        // Also create mobile cash card
+        if (mobileCardsContainer) {
+            const cashCard = createMobileCashCard(pocket);
+            mobileCardsContainer.appendChild(cashCard);
+        }
     });
 }
 
@@ -1080,6 +1154,171 @@ function createCashPocketRow(pocket) {
     `;
 
     return row;
+}
+
+// Create mobile stock card
+function createMobileStockCard(stock, watchlistItem) {
+    const card = document.createElement('div');
+    const qty = watchlistItem.quantity || 0;
+    const isWatchOnly = watchlistItem.isWatchOnly || false;
+    const isPinned = watchlistItem.pinned || false;
+    const isUSD = isUSDStock(stock.symbol);
+
+    card.className = 'stock-card';
+    if (isPinned) {
+        card.classList.add('pinned-card');
+    }
+
+    const changeSign = stock.change >= 0 ? '+' : '';
+    const colorClass = stock.change >= 0 ? 'positive' : 'negative';
+
+    // Calculate holdings
+    const holdingValueUSD = stock.price * qty;
+    const holdingValueCAD = holdingValueUSD * usdCadRate;
+
+    let holdingsDisplay = '-';
+    if (qty > 0) {
+        if (isUSD) {
+            holdingsDisplay = `
+                <div class="dual-currency">
+                    <div>$${holdingValueUSD.toFixed(2)} USD</div>
+                    <div class="cad-value-small">$${holdingValueCAD.toFixed(2)} CAD</div>
+                </div>
+            `;
+        } else {
+            holdingsDisplay = `$${holdingValueUSD.toFixed(2)} CAD`;
+        }
+    }
+
+    // High/Low values
+    let highLowDisplay = '';
+    if (stock.dayHigh && stock.dayLow) {
+        const currency = isUSD ? 'USD' : 'CAD';
+        highLowDisplay = `
+            <div class="card-high-low">
+                <div class="high-low-item">
+                    <span class="high-low-label">Day High</span>
+                    <span class="high-low-value high">$${stock.dayHigh.toFixed(2)} ${currency}</span>
+                </div>
+                <div class="high-low-item">
+                    <span class="high-low-label">Day Low</span>
+                    <span class="high-low-value low">$${stock.dayLow.toFixed(2)} ${currency}</span>
+                </div>
+            </div>
+        `;
+    }
+
+    const pinBadge = isPinned ? `<span class="pin-badge">📌</span>` : '';
+
+    card.innerHTML = `
+        <div class="card-header">
+            <div class="card-symbol">
+                <div class="card-symbol-name">
+                    <span class="clickable-symbol" onclick="openStockNews('${stock.symbol}')">${stock.symbol}</span>
+                    ${pinBadge}
+                </div>
+                <div class="card-symbol-subtext">${isUSD ? 'USD Stock' : 'CAD Stock'}</div>
+            </div>
+            <div class="card-price-section">
+                <div class="card-price">$${stock.price.toFixed(2)}</div>
+                <div class="card-change-row">
+                    <span class="card-change ${colorClass}">${changeSign}$${stock.change.toFixed(2)}</span>
+                    <span class="card-percent ${colorClass}">${changeSign}${stock.changePercent.toFixed(2)}%</span>
+                </div>
+            </div>
+        </div>
+
+        ${highLowDisplay}
+
+        <div class="card-details">
+            <div class="card-detail-item">
+                <span class="card-detail-label">Quantity</span>
+                <span class="card-detail-value">${qty}</span>
+            </div>
+            <div class="card-detail-item">
+                <span class="card-detail-label">Holdings Value</span>
+                <div class="card-detail-value">${holdingsDisplay}</div>
+            </div>
+        </div>
+
+        ${!isWatchOnly ? `
+        <div class="card-quantity-section">
+            <div class="card-quantity-row">
+                <span class="card-quantity-label">Update Quantity:</span>
+                <div class="card-quantity-input">
+                    <input
+                        type="number"
+                        class="quantity-input-field"
+                        value="${qty}"
+                        min="0"
+                        step="1"
+                        onchange="updateQuantity('${stock.symbol}', this.value)"
+                    />
+                    <button class="update-btn" onclick="updateQuantity('${stock.symbol}', this.previousElementSibling.value)">Update</button>
+                </div>
+            </div>
+        </div>
+        ` : ''}
+
+        <div class="card-actions">
+            <button class="pin-btn ${isPinned ? 'pinned' : ''}" onclick="togglePin('${stock.symbol}')" title="${isPinned ? 'Unpin' : 'Pin to top'}">
+                ${isPinned ? '📌 Unpin' : '📍 Pin'}
+            </button>
+            <button class="remove-btn" onclick="removeStock('${stock.symbol}')">Remove</button>
+        </div>
+    `;
+
+    return card;
+}
+
+// Create mobile cash card
+function createMobileCashCard(pocket) {
+    const card = document.createElement('div');
+    card.className = 'stock-card cash-card';
+
+    const balance = Math.max(0, pocket.balance);
+    const balanceInCAD = pocket.currency === 'USD' ? balance * usdCadRate : balance;
+
+    card.innerHTML = `
+        <div class="card-header">
+            <div class="card-symbol">
+                <div class="card-symbol-name">💵 ${pocket.name}</div>
+                <div class="card-symbol-subtext">Cash Pocket</div>
+            </div>
+            <div class="card-price-section">
+                <div class="card-price" style="color: #27ae60;">$${balanceInCAD.toFixed(2)}</div>
+                <div class="card-symbol-subtext">CAD Value</div>
+            </div>
+        </div>
+
+        <div class="card-quantity-section">
+            <div class="card-quantity-row">
+                <span class="card-quantity-label">Balance:</span>
+                <div class="card-quantity-input">
+                    <input
+                        type="number"
+                        id="cash-balance-mobile-${pocket.id}"
+                        class="quantity-input-field"
+                        value="${balance > 0 ? balance.toFixed(2) : ''}"
+                        placeholder="0.00"
+                        min="0"
+                        step="0.01"
+                    />
+                    <select id="cash-currency-mobile-${pocket.id}" style="padding: 8px 12px; border-radius: 8px; border: 2px solid #e2e8f0; font-size: 1rem;">
+                        <option value="CAD" ${pocket.currency === 'CAD' ? 'selected' : ''}>CAD</option>
+                        <option value="USD" ${pocket.currency === 'USD' ? 'selected' : ''}>USD</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-actions">
+            <button class="update-btn" style="flex: 1;" onclick="updateCashPocketValuesMobile('${pocket.id}')">Update</button>
+            <button class="remove-btn" style="flex: 1;" onclick="removeCashPocket('${pocket.id}')">Remove</button>
+        </div>
+    `;
+
+    return card;
 }
 
 // Show empty state

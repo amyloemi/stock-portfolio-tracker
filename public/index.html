@@ -40,7 +40,7 @@
         <div id="loading" class="loading" style="display: none;">Loading stocks...</div>
         <div id="error" class="error" style="display: none;"></div>
 
-        <!-- Stocks Table -->
+        <!-- Stocks Table (Desktop) -->
         <div class="stocks-table-container">
             <table id="stocks-table" class="stocks-table">
                 <thead>
@@ -83,6 +83,30 @@
                     </tr>
                 </tfoot>
             </table>
+        </div>
+
+        <!-- Stocks Mobile Cards -->
+        <div class="stocks-mobile-cards">
+            <div id="stocks-cards-container">
+                <!-- Cards will be populated by JavaScript -->
+            </div>
+
+            <!-- Add Stock Form (Mobile) -->
+            <div class="add-stock-form" style="margin-top: 15px; padding: 15px; background: white; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
+                <input
+                    type="text"
+                    id="add-stock-input-mobile"
+                    class="add-stock-input"
+                    placeholder="Enter stock symbol (e.g., TSLA) or cash pocket"
+                    autocomplete="off"
+                />
+                <button id="add-stock-btn-mobile" class="add-stock-btn">Add</button>
+            </div>
+            <div class="info-section-inline" style="margin-top: 10px; padding: 12px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+                <p class="info-text">
+                    💡 <strong>Tip:</strong> Add <code>.TO</code> for TSX stocks (e.g., <code>ZGD.TO</code>). For USD-denominated TSX: use <code>-U.TO</code> (e.g., <code>ZGLD-U.TO</code>). For cash: type any name starting with 'cash'.
+                </p>
+            </div>
         </div>
 
         <!-- Empty State -->
