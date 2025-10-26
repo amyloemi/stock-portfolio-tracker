@@ -1112,7 +1112,7 @@ function createCashPocketRow(pocket) {
                     step="0.01"
                     style="width: 100px;"
                 />
-                <select id="cash-currency-${pocket.id}" style="padding: 4px; border-radius: 4px; border: 2px solid #e5e5e5; font-size: 0.85rem;">
+                <select id="cash-currency-${pocket.id}" class="cash-currency-select">
                     <option value="CAD" ${pocket.currency === 'CAD' ? 'selected' : ''}>CAD</option>
                     <option value="USD" ${pocket.currency === 'USD' ? 'selected' : ''}>USD</option>
                 </select>
@@ -1277,7 +1277,7 @@ function createMobileCashCard(pocket) {
                         min="0"
                         step="0.01"
                     />
-                    <select id="cash-currency-mobile-${pocket.id}" class="cash-currency-select" style="padding: 10px 14px; border-radius: 8px; border: 2px solid #e2e8f0; font-size: 1rem; font-weight: 600;">
+                    <select id="cash-currency-mobile-${pocket.id}" class="cash-currency-select">
                         <option value="CAD" ${pocket.currency === 'CAD' ? 'selected' : ''}>CAD</option>
                         <option value="USD" ${pocket.currency === 'USD' ? 'selected' : ''}>USD</option>
                     </select>

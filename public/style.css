@@ -1,5 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
+/**
+ * DESIGN TOKENS
+ *
+ * Colors:
+ * - Primary: #6366f1 (indigo-500)
+ * - Success: #10b981 (emerald-500)
+ * - Danger: #ef4444 (red-500)
+ * - Text: #1e293b (slate-800), #475569 (slate-600), #64748b (slate-500)
+ * - Border: #e2e8f0 (slate-200)
+ * - Background: #f8fafc (slate-50)
+ *
+ * Spacing Scale: 4px, 8px, 12px, 16px, 24px, 32px
+ * Border Radius: 4px (sm), 8px (md), 12px (lg), 16px (xl)
+ * Typography: 0.75rem, 0.875rem, 1rem, 1.125rem, 1.25rem, 1.5rem, 2rem
+ * Shadows:
+ * - sm: 0 2px 6px rgba(0,0,0,0.08)
+ * - md: 0 4px 12px rgba(0,0,0,0.1)
+ * - lg: 0 8px 24px rgba(0,0,0,0.12)
+ */
+
 * {
     margin: 0;
     padding: 0;
@@ -8,7 +28,7 @@
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+    background: linear-gradient(135deg, #dce4ff 0%, #f0f1f9 50%, #f3e8ff 100%);
     background-attachment: fixed;
     min-height: 100vh;
     display: flex;
@@ -27,8 +47,8 @@ body::before {
     right: 0;
     bottom: 0;
     background:
-        radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+        radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 50%);
     pointer-events: none;
     z-index: 0;
 }
@@ -65,7 +85,7 @@ header h1 {
     padding: 20px 24px;
     margin-bottom: 20px;
     box-shadow:
-        0 15px 45px rgba(0, 0, 0, 0.12),
+        0 15px 45px rgba(99, 102, 241, 0.15),
         0 0 0 1px rgba(255, 255, 255, 0.1) inset;
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
@@ -87,21 +107,22 @@ header h1 {
 }
 
 .portfolio-currency-select {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    background: #6366f1;
     color: white;
     border: none;
     padding: 6px 14px;
-    border-radius: 10px;
+    border-radius: 8px;
     font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+    box-shadow: 0 2px 6px rgba(99, 102, 241, 0.2);
 }
 
 .portfolio-currency-select:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+    background: #5558e3;
 }
 
 .portfolio-currency-select option {
@@ -112,7 +133,7 @@ header h1 {
 .portfolio-value-display {
     font-size: 2.5rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+    background: linear-gradient(135deg, #5b21b6 0%, #7c3aed 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -131,7 +152,7 @@ header h1 {
 }
 
 .portfolio-change.positive {
-    color: #4ade80;
+    color: #22c55e;
 }
 
 .portfolio-change.negative {
@@ -153,10 +174,10 @@ header h1 {
 }
 
 .breakdown-item {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+    background: linear-gradient(135deg, #f8fafc 0%, #f0f4ff 100%);
     padding: 10px 12px;
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    border: 1px solid #dce4ff;
 }
 
 .breakdown-label {
@@ -213,19 +234,32 @@ header h1 {
 }
 
 .cash-currency-select {
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
     color: white;
-    font-size: 0.9rem;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.875rem;
     font-weight: 600;
-    padding: 4px 8px;
-    border-radius: 6px;
     cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(139, 92, 246, 0.25);
     outline: none;
 }
 
 .cash-currency-select option {
-    background: #667eea;
+    background: #8b5cf6;
+    color: white;
+}
+
+.cash-currency-select:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25);
+    background: #7c3aed;
+}
+
+.portfolio-currency-select option {
+    background: #6366f1;
     color: white;
 }
 
@@ -233,11 +267,11 @@ header h1 {
 .chart-container {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
-    border-radius: 20px;
+    border-radius: 16px;
     padding: 32px;
     margin-bottom: 25px;
     box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.12),
+        0 20px 60px rgba(99, 102, 241, 0.12),
         0 0 0 1px rgba(255, 255, 255, 0.1) inset;
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
@@ -259,7 +293,7 @@ header h1 {
 /* Unified Stock Management Section */
 .stock-management-section {
     background: white;
-    border-radius: 15px;
+    border-radius: 16px;
     padding: 20px;
     margin-bottom: 30px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -302,10 +336,10 @@ header h1 {
 #stock-price-input,
 #stock-date-input {
     flex: 1;
-    padding: 12px 15px;
-    border: 2px solid #e5e5e5;
-    border-radius: 10px;
-    font-size: 1rem;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.875rem;
     transition: all 0.3s ease;
     background: white;
     min-width: 120px;
@@ -316,10 +350,10 @@ header h1 {
 }
 
 .action-select {
-    padding: 12px 15px;
-    border: 2px solid #e5e5e5;
-    border-radius: 10px;
-    font-size: 1rem;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.875rem;
     background: white;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -342,7 +376,7 @@ header h1 {
     margin-top: 15px;
     padding: 15px;
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 .cash-label {
@@ -360,17 +394,17 @@ header h1 {
     background: white;
     padding: 8px 12px;
     border-radius: 8px;
-    border: 2px solid #e5e5e5;
+    border: 2px solid #e2e8f0;
     transition: all 0.3s ease;
 }
 
 .cash-input-wrapper:focus-within {
-    border-color: #667eea;
+    border-color: #6366f1;
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .currency-symbol-input {
-    color: #667eea;
+    color: #6366f1;
     font-size: 1.1rem;
     font-weight: 700;
 }
@@ -391,12 +425,12 @@ header h1 {
 
 .cash-currency-select-field {
     background: #f8f9fa;
-    border: 1px solid #e5e5e5;
+    border: 1px solid #e2e8f0;
     color: #333;
     font-size: 0.9rem;
     font-weight: 600;
     padding: 6px 10px;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
     outline: none;
 }
@@ -407,43 +441,42 @@ header h1 {
 #stock-date-input:focus,
 .action-select:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #6366f1;
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .add-btn {
-    background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+    background: #10b981;
     color: white;
     border: none;
-    padding: 12px 25px;
-    border-radius: 10px;
-    font-size: 1rem;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     white-space: nowrap;
-    box-shadow: 0 3px 10px rgba(39, 174, 96, 0.2);
+    box-shadow: 0 2px 6px rgba(16, 185, 129, 0.2);
 }
 
 .add-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(39, 174, 96, 0.3);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+    background: #059669;
 }
 
 .refresh-btn {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    background: linear-gradient(135deg, #6366f1 0%, #7c3aed 100%);
     color: white;
     border: none;
-    padding: 14px 32px;
-    border-radius: 14px;
-    font-size: 0.95rem;
-    font-weight: 700;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     white-space: nowrap;
-    box-shadow:
-        0 4px 14px rgba(99, 102, 241, 0.3),
-        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    box-shadow: 0 2px 6px rgba(99, 102, 241, 0.2);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -473,7 +506,7 @@ header h1 {
     height: 56px;
     border-radius: 50%;
     padding: 0;
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
     z-index: 1000;
 }
 
@@ -483,7 +516,8 @@ header h1 {
 
 .refresh-btn-floating:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(99, 102, 241, 0.5);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+    background: #5558e3;
 }
 
 .refresh-btn-floating:active {
@@ -500,7 +534,7 @@ header h1 {
 /* Transaction History Section */
 .transaction-history-section {
     background: white;
-    border-radius: 15px;
+    border-radius: 16px;
     padding: 20px;
     margin-bottom: 30px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -518,7 +552,7 @@ header h1 {
 }
 
 .transaction-table thead {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #6366f1 0%, #764ba2 100%);
     color: white;
     position: sticky;
     top: 0;
@@ -547,34 +581,34 @@ header h1 {
 
 .transaction-table td {
     padding: 12px 15px;
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e2e8f0;
 }
 
 .transaction-action-buy {
-    color: #27ae60;
+    color: #10b981;
     font-weight: 600;
     text-transform: uppercase;
 }
 
 .transaction-action-sell {
-    color: #e74c3c;
+    color: #ef4444;
     font-weight: 600;
     text-transform: uppercase;
 }
 
 .remove-transaction-btn {
-    background: #e74c3c;
+    background: #ef4444;
     color: white;
     border: none;
     padding: 6px 12px;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 0.85rem;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .remove-transaction-btn:hover {
-    background: #c0392b;
+    background: #dc2626;
     transform: translateY(-1px);
 }
 
@@ -589,9 +623,9 @@ header h1 {
     background: rgba(148, 163, 184, 0.1);
     color: #94a3b8;
     border: 1px solid rgba(148, 163, 184, 0.2);
-    padding: 14px 32px;
-    border-radius: 14px;
-    font-size: 0.85rem;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -615,57 +649,57 @@ header h1 {
 }
 
 .danger-btn {
-    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
     color: white;
     border: none;
-    padding: 12px 25px;
-    border-radius: 10px;
-    font-size: 1rem;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 3px 10px rgba(231, 76, 60, 0.2);
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
 }
 
 .danger-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.3);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
 }
 
 .warning-btn {
     background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
     color: white;
     border: none;
-    padding: 12px 25px;
-    border-radius: 10px;
-    font-size: 1rem;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 3px 10px rgba(243, 156, 18, 0.2);
+    box-shadow: 0 2px 8px rgba(243, 156, 18, 0.3);
 }
 
 .warning-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(243, 156, 18, 0.3);
+    box-shadow: 0 4px 12px rgba(243, 156, 18, 0.35);
 }
 
 .cancel-btn {
     background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
     color: white;
     border: none;
-    padding: 12px 25px;
-    border-radius: 10px;
-    font-size: 1rem;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 3px 10px rgba(149, 165, 166, 0.2);
+    box-shadow: 0 2px 8px rgba(149, 165, 166, 0.3);
 }
 
 .cancel-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(149, 165, 166, 0.3);
+    box-shadow: 0 4px 12px rgba(149, 165, 166, 0.35);
 }
 
 /* Confirmation Modal */
@@ -691,7 +725,7 @@ header h1 {
     margin-top: 20px;
     padding: 15px;
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    border-radius: 10px;
+    border-radius: 8px;
     text-align: center;
 }
 
@@ -710,8 +744,9 @@ header h1 {
 
 .refresh-btn:hover {
     transform: translateY(-2px);
+    background: linear-gradient(135deg, #5b21b6 0%, #6d28d9 100%);
     box-shadow:
-        0 8px 28px rgba(99, 102, 241, 0.4),
+        0 8px 28px rgba(99, 102, 241, 0.35),
         0 0 0 1px rgba(255, 255, 255, 0.2) inset;
 }
 
@@ -722,11 +757,11 @@ header h1 {
 /* Info Section */
 .info-section {
     background: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 12px 18px;
     margin-bottom: 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    border-left: 3px solid #667eea;
+    border-left: 3px solid #6366f1;
 }
 
 .info-text {
@@ -742,7 +777,7 @@ header h1 {
     border-radius: 4px;
     font-family: 'Courier New', monospace;
     font-size: 0.85rem;
-    color: #667eea;
+    color: #6366f1;
     font-weight: 600;
 }
 
@@ -750,11 +785,11 @@ header h1 {
 .stocks-table-container {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
-    border-radius: 20px;
+    border-radius: 16px;
     padding: 0;
     margin-bottom: 25px;
     box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.12),
+        0 20px 60px rgba(99, 102, 241, 0.12),
         0 0 0 1px rgba(255, 255, 255, 0.1) inset;
     border: 1px solid rgba(255, 255, 255, 0.3);
     overflow: hidden;
@@ -849,7 +884,7 @@ header h1 {
 
 .cash-row {
     background: linear-gradient(135deg, #f0f9f4 0%, #e8f5e9 100%) !important;
-    border-top: 2px solid #27ae60 !important;
+    border-top: 2px solid #10b981 !important;
     font-weight: 600;
 }
 
@@ -871,10 +906,10 @@ header h1 {
 
 .add-stock-input {
     flex: 1;
-    padding: 12px 18px;
+    padding: 12px 16px;
     border: 2px solid #e2e8f0;
     border-radius: 12px;
-    font-size: 0.95rem;
+    font-size: 0.875rem;
     font-weight: 500;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     background: rgba(255, 255, 255, 0.9);
@@ -896,7 +931,7 @@ header h1 {
     border-color: #6366f1;
     background: rgba(255, 255, 255, 1);
     box-shadow:
-        0 0 0 4px rgba(99, 102, 241, 0.1),
+        0 0 0 3px rgba(99, 102, 241, 0.12),
         0 4px 12px rgba(99, 102, 241, 0.15);
     transform: translateY(-1px);
 }
@@ -1002,29 +1037,29 @@ header h1 {
 
 .price-cell {
     font-weight: 600;
-    color: #667eea;
+    color: #6366f1;
 }
 
 .remove-btn {
     background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
     color: white;
     border: none;
-    padding: 8px 18px;
-    border-radius: 10px;
-    font-size: 0.8125rem;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     white-space: nowrap;
     box-shadow:
-        0 2px 8px rgba(239, 68, 68, 0.25),
+        0 2px 8px rgba(239, 68, 68, 0.3),
         0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
 
 .remove-btn:hover {
     transform: translateY(-1px);
     box-shadow:
-        0 4px 14px rgba(239, 68, 68, 0.35),
+        0 4px 12px rgba(239, 68, 68, 0.35),
         0 0 0 1px rgba(255, 255, 255, 0.2) inset;
 }
 
@@ -1036,22 +1071,22 @@ header h1 {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: white;
     border: none;
-    padding: 8px 18px;
-    border-radius: 10px;
-    font-size: 0.8125rem;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     white-space: nowrap;
     box-shadow:
-        0 2px 8px rgba(16, 185, 129, 0.25),
+        0 2px 8px rgba(16, 185, 129, 0.3),
         0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
 
 .update-btn:hover {
     transform: translateY(-1px);
     box-shadow:
-        0 4px 14px rgba(16, 185, 129, 0.35),
+        0 4px 12px rgba(16, 185, 129, 0.35),
         0 0 0 1px rgba(255, 255, 255, 0.2) inset;
 }
 
@@ -1129,9 +1164,9 @@ header h1 {
     text-align: center;
     padding: 30px 20px;
     font-size: 1rem;
-    color: #667eea;
+    color: #6366f1;
     background: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
+    border-radius: 8px;
     margin-bottom: 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     font-weight: 500;
@@ -1141,22 +1176,22 @@ header h1 {
     text-align: center;
     padding: 15px 20px;
     font-size: 0.95rem;
-    color: #e74c3c;
+    color: #ef4444;
     background: rgba(231, 76, 60, 0.1);
     border: 1px solid rgba(231, 76, 60, 0.3);
-    border-radius: 10px;
+    border-radius: 8px;
     margin-bottom: 20px;
     font-weight: 500;
 }
 
 /* Table cell styles */
 .positive {
-    color: #27ae60;
+    color: #10b981;
     font-weight: 600;
 }
 
 .negative {
-    color: #e74c3c;
+    color: #ef4444;
     font-weight: 600;
 }
 
@@ -1167,8 +1202,8 @@ header h1 {
 .quantity-input-field {
     width: 60px;
     padding: 6px 8px;
-    border: 2px solid #e5e5e5;
-    border-radius: 6px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
     font-size: 0.9rem;
     transition: all 0.3s ease;
     background: white;
@@ -1177,13 +1212,13 @@ header h1 {
 
 .quantity-input-field:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #6366f1;
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .holdings-cell {
     font-weight: 600;
-    color: #667eea;
+    color: #6366f1;
     min-width: 140px;
 }
 
@@ -1216,12 +1251,12 @@ header h1 {
 }
 
 .high-value {
-    color: #27ae60;
+    color: #10b981;
     font-weight: 600;
 }
 
 .low-value {
-    color: #e74c3c;
+    color: #ef4444;
     font-weight: 600;
 }
 
@@ -1266,7 +1301,7 @@ header h1 {
 
 .modal-content {
     background: white;
-    border-radius: 15px;
+    border-radius: 16px;
     max-width: 700px;
     width: 90%;
     max-height: 80vh;
@@ -1292,8 +1327,8 @@ header h1 {
     align-items: center;
     padding: 20px 25px;
     border-bottom: 2px solid #f0f0f0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 15px 15px 0 0;
+    background: linear-gradient(135deg, #6366f1 0%, #764ba2 100%);
+    border-radius: 16px 16px 0 0;
 }
 
 .modal-header h3 {
@@ -1329,7 +1364,7 @@ header h1 {
 
 .portfolio-snapshot-summary {
     background: linear-gradient(135deg, #f0f4ff 0%, #faf5ff 100%);
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 20px;
     margin-bottom: 25px;
     text-align: center;
@@ -1350,7 +1385,7 @@ header h1 {
 .snapshot-value {
     font-size: 2rem;
     font-weight: 700;
-    color: #667eea;
+    color: #6366f1;
 }
 
 .snapshot-status {
@@ -1406,7 +1441,7 @@ header h1 {
 
 .snapshot-value-cell {
     font-weight: 600;
-    color: #667eea;
+    color: #6366f1;
 }
 
 .snapshot-footer {
@@ -1462,7 +1497,7 @@ footer p {
     /* Portfolio Summary - Mobile */
     .portfolio-summary {
         padding: 16px 14px;
-        border-radius: 14px;
+        border-radius: 12px;
         margin-bottom: 16px;
     }
 
@@ -1548,47 +1583,68 @@ footer p {
         border-radius: 12px;
         padding: 14px;
         margin-bottom: 10px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        box-shadow: 0 2px 8px rgba(99, 102, 241, 0.08);
         border: 1px solid #e5e7eb;
         transition: all 0.3s ease;
     }
 
     .stock-card:hover {
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.15);
         transform: translateY(-2px);
     }
 
     .stock-card.cash-card {
-        background: linear-gradient(135deg, #f0f9f4 0%, #e8f5e9 100%);
-        border: 2px solid #27ae60;
+        background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+        border: 1px solid #e9d5ff;
     }
 
     .cash-balance-value {
-        color: #27ae60 !important;
+        color: #8b5cf6 !important;
         font-size: 1.6rem !important;
         font-weight: 800 !important;
     }
 
     .cash-balance-input {
-        width: 150px !important;
-        min-width: 150px !important;
-        padding: 12px 14px !important;
+        width: 110px !important;
+        min-width: 110px !important;
+        padding: 8px 12px !important;
         font-size: 1rem !important;
         font-weight: 600 !important;
-        border: 2px solid #27ae60 !important;
+        border: 2px solid #e2e8f0 !important;
+        border-radius: 8px !important;
         background: white !important;
+        color: #1e293b !important;
+        text-align: center !important;
+        height: 40px !important;
         -webkit-appearance: none;
         appearance: none;
+        transition: all 0.3s ease !important;
+    }
+
+    .cash-balance-input:focus {
+        outline: none !important;
+        border-color: #6366f1 !important;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12) !important;
     }
 
     .cash-currency-select {
-        width: 85px;
-        min-width: 85px;
-        padding: 12px 10px !important;
-        font-size: 0.95rem !important;
+        width: 80px;
+        min-width: 80px;
+        height: 40px !important;
+        padding: 8px 12px !important;
+        font-size: 0.875rem !important;
         font-weight: 600 !important;
-        border: 2px solid #27ae60 !important;
-        background: white !important;
+        border: none !important;
+        border-radius: 8px !important;
+        background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%) !important;
+        color: white !important;
+        box-shadow: 0 2px 6px rgba(139, 92, 246, 0.25) !important;
+    }
+
+    .card-quantity-input {
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
 
     .card-quantity-row {
@@ -1658,11 +1714,11 @@ footer p {
     }
 
     .card-change.positive {
-        color: #27ae60;
+        color: #10b981;
     }
 
     .card-change.negative {
-        color: #e74c3c;
+        color: #ef4444;
     }
 
     .card-percent {
@@ -1675,12 +1731,12 @@ footer p {
 
     .card-percent.positive {
         background: #d4edda;
-        color: #27ae60;
+        color: #10b981;
     }
 
     .card-percent.negative {
         background: #f8d7da;
-        color: #e74c3c;
+        color: #ef4444;
     }
 
     .card-details {
@@ -1758,11 +1814,11 @@ footer p {
     }
 
     .quantity-input-field {
-        width: 50px;
+        width: 70px;
         padding: 6px 8px;
         font-size: 0.9rem;
         border: 2px solid #e2e8f0;
-        border-radius: 6px;
+        border-radius: 8px;
         font-weight: 600;
         text-align: center;
     }
@@ -1770,7 +1826,7 @@ footer p {
     .update-btn {
         padding: 6px 12px;
         font-size: 0.75rem;
-        border-radius: 6px;
+        border-radius: 8px;
         font-weight: 600;
     }
 
@@ -1783,7 +1839,7 @@ footer p {
         flex: 1;
         padding: 8px 12px;
         font-size: 0.8rem;
-        border-radius: 6px;
+        border-radius: 8px;
         font-weight: 600;
     }
 
@@ -1793,7 +1849,7 @@ footer p {
         padding: 8px;
         margin: 8px 0;
         background: #f8fafc;
-        border-radius: 6px;
+        border-radius: 8px;
     }
 
     .high-low-item {
@@ -1816,11 +1872,11 @@ footer p {
     }
 
     .high-low-value.high {
-        color: #27ae60;
+        color: #10b981;
     }
 
     .high-low-value.low {
-        color: #e74c3c;
+        color: #ef4444;
     }
 
     /* Add Stock Form - Mobile */
