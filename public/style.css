@@ -120,8 +120,7 @@ header h1 {
 }
 
 #portfolio-currency-label {
-    font-size: 1.5rem;
-    opacity: 0.6;
+    display: none; /* Hidden on all devices */
 }
 
 .portfolio-change {
@@ -1422,10 +1421,6 @@ footer p {
         text-align: center;
         display: block;
         width: 100%;
-    }
-
-    #portfolio-currency-label {
-        display: none; /* Hide currency label on mobile */
     }
 
     .portfolio-change {
