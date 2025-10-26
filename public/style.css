@@ -1405,7 +1405,7 @@ footer p {
 
     /* Portfolio Summary - Mobile */
     .portfolio-summary {
-        padding: 20px 16px;
+        padding: 24px 18px;
         border-radius: 16px;
     }
 
@@ -1425,7 +1425,7 @@ footer p {
     }
 
     #portfolio-currency-label {
-        font-size: 1.2rem;
+        display: none; /* Hide currency label on mobile */
     }
 
     .portfolio-change {
@@ -1433,17 +1433,18 @@ footer p {
         text-align: center;
         display: block;
         width: 100%;
+        margin-top: 8px;
     }
 
     .portfolio-breakdown {
         grid-template-columns: 1fr;
-        gap: 10px;
-        padding-top: 16px;
-        margin-top: 16px;
+        gap: 12px;
+        padding-top: 18px;
+        margin-top: 18px;
     }
 
     .breakdown-item {
-        padding: 10px 12px;
+        padding: 12px 14px;
     }
 
     .breakdown-value {
@@ -1479,8 +1480,8 @@ footer p {
     .stock-card {
         background: white;
         border-radius: 14px;
-        padding: 16px;
-        margin-bottom: 10px;
+        padding: 18px;
+        margin-bottom: 12px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
         border: 1px solid #e5e7eb;
         transition: all 0.3s ease;
@@ -1500,7 +1501,7 @@ footer p {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 12px;
+        margin-bottom: 14px;
         padding-bottom: 0;
     }
 
@@ -1582,16 +1583,16 @@ footer p {
     .card-details {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 10px;
-        margin-bottom: 12px;
+        gap: 12px;
+        margin-bottom: 14px;
     }
 
     .card-detail-item {
         display: flex;
         flex-direction: column;
-        gap: 5px;
+        gap: 6px;
         background: #f8fafc;
-        padding: 10px 12px;
+        padding: 12px 14px;
         border-radius: 8px;
     }
 
@@ -1633,8 +1634,8 @@ footer p {
     .card-quantity-row {
         display: flex;
         align-items: center;
-        gap: 8px;
-        padding: 10px 12px;
+        gap: 10px;
+        padding: 12px 14px;
     }
 
     .card-quantity-label {
@@ -1756,15 +1757,23 @@ footer p {
 
     /* Buttons - Mobile */
     .refresh-btn {
-        padding: 14px 28px;
-        font-size: 0.9rem;
-        width: calc(100% - 32px);
-        max-width: 320px;
+        padding: 16px 32px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        width: calc(100% - 40px);
+        max-width: 340px;
         margin: 0 auto;
+        border-radius: 16px;
+        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+        gap: 10px;
+    }
+
+    .refresh-btn:active {
+        transform: scale(0.98);
     }
 
     .action-buttons-container {
-        margin: 0 16px 20px 16px;
+        margin: 0 20px 24px 20px;
         display: flex;
         justify-content: center;
     }
