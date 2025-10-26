@@ -1,0 +1,97 @@
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { getStockPrice, getHistoricalPrices } from './services/stockService.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const app = express();
+const PORT = 3000;
+
+// Middleware
+app.use(express.json());
+app.use(express.static(path.join(__dirname, '../public')));
+
+// API endpoint to get a single stock price by symbol
+app.get('/api/stock/:symbol', async (req, res) => {
+  try {
+    const symbol = req.params.symbol?.toUpperCase();
+    if (!symbol) {
+      return res.status(400).json({ error: 'Stock symbol is required' });
+    }
+    const stockData = await getStockPrice(symbol);
+    res.json(stockData);
+  } catch (error) {
+    console.error('Error fetching stock data:', error);
+    res.status(500).json({ error: 'Failed to fetch stock data' });
+  }
+});
+
+// API endpoint to get multiple stocks at once
+app.post('/api/stocks', async (req, res) => {
+  try {
+    const { symbols } = req.body;
+
+    if (!Array.isArray(symbols) || symbols.length === 0) {
+      return res.status(400).json({ error: 'Symbols array is required' });
+    }
+
+    // Fetch all stocks in parallel
+    const stockPromises = symbols.map(symbol =>
+      getStockPrice(symbol.toUpperCase()).catch(error => ({
+        symbol: symbol.toUpperCase(),
+        error: 'Failed to fetch',
+      }))
+    );
+
+    const stocksData = await Promise.all(stockPromises);
+    res.json(stocksData);
+  } catch (error) {
+    console.error('Error fetching stocks data:', error);
+    res.status(500).json({ error: 'Failed to fetch stocks data' });
+  }
+});
+
+// API endpoint to get USD/CAD exchange rate
+app.get('/api/exchange-rate/usd-cad', async (req, res) => {
+  try {
+    // Using Yahoo Finance to get USDCAD=X exchange rate
+    const stockData = await getStockPrice('USDCAD=X');
+    res.json({ rate: stockData.price });
+  } catch (error) {
+    console.error('Error fetching exchange rate:', error);
+    // Return a fallback rate
+    res.json({ rate: 1.37 }); // Approximate fallback
+  }
+});
+
+// API endpoint to get historical prices for multiple stocks
+app.post('/api/historical-prices', async (req, res) => {
+  try {
+    const { symbols, days = 30 } = req.body;
+
+    if (!Array.isArray(symbols) || symbols.length === 0) {
+      return res.status(400).json({ error: 'Symbols array is required' });
+    }
+
+    // Fetch historical prices for all stocks in parallel
+    const historicalPromises = symbols.map(async symbol => {
+      const prices = await getHistoricalPrices(symbol.toUpperCase(), days);
+      return { symbol: symbol.toUpperCase(), prices };
+    });
+
+    const historicalData = await Promise.all(historicalPromises);
+    res.json(historicalData);
+  } catch (error) {
+    console.error('Error fetching historical prices:', error);
+    res.status(500).json({ error: 'Failed to fetch historical prices' });
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`View your stock watchlist at http://localhost:${PORT}`);
+});
+
+export {};

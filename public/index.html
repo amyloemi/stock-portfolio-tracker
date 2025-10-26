@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Watchlist</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Portfolio Summary -->
+        <div class="portfolio-summary">
+            <div class="portfolio-info">
+                <div class="portfolio-title-row">
+                    <h2 class="portfolio-title">Total Portfolio Value</h2>
+                    <select id="portfolio-currency-select" class="portfolio-currency-select">
+                        <option value="CAD">CAD</option>
+                        <option value="USD">USD</option>
+                    </select>
+                </div>
+                <div class="portfolio-value-display">
+                    $<span id="portfolio-value">0.00</span> <span id="portfolio-currency-label">CAD</span>
+                </div>
+                <div id="portfolio-change" class="portfolio-change">$0.00 CAD</div>
+            </div>
+            <div class="portfolio-breakdown">
+                <div class="breakdown-item">
+                    <span class="breakdown-label">Stocks Value:</span>
+                    <span class="breakdown-value">$<span id="stocks-value">0.00</span></span>
+                </div>
+                <div class="breakdown-item">
+                    <span class="breakdown-label">Cash Balance:</span>
+                    <span class="breakdown-value">$<span id="cash-display">0.00</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading and Error States -->
+        <div id="loading" class="loading" style="display: none;">Loading stocks...</div>
+        <div id="error" class="error" style="display: none;"></div>
+
+        <!-- Stocks Table -->
+        <div class="stocks-table-container">
+            <table id="stocks-table" class="stocks-table">
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th class="sortable-header" onclick="sortStocksByColumn('price')">Price</th>
+                        <th class="sortable-header" onclick="sortStocksByColumn('change')">Change</th>
+                        <th class="sortable-header" onclick="sortStocksByColumn('changePercent')">Change %</th>
+                        <th>Quantity</th>
+                        <th class="sortable-header" onclick="sortStocksByColumn('holdings')">Holdings Value</th>
+                        <th>Day High/Low</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="stocks-tbody">
+                </tbody>
+                <tfoot>
+                    <tr class="add-new-row">
+                        <td colspan="8">
+                            <div class="add-stock-form">
+                                <input
+                                    type="text"
+                                    id="add-stock-input"
+                                    class="add-stock-input"
+                                    placeholder="Enter stock symbol (e.g., TSLA) or cash pocket (start with 'cash')"
+                                    autocomplete="off"
+                                />
+                                <button id="add-stock-btn" class="add-stock-btn">Add</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="tips-row">
+                        <td colspan="8">
+                            <div class="info-section-inline">
+                                <p class="info-text">
+                                    💡 <strong>Tip:</strong> Add <code>.TO</code> for TSX stocks (e.g., <code>ZGD.TO</code>). For USD-denominated TSX: use <code>-U.TO</code> (e.g., <code>ZGLD-U.TO</code>). For cash: type any name starting with 'cash'.
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="empty-state" style="display: none;">
+            <p>No stocks in your watchlist yet.</p>
+            <p>Add some stocks above to get started!</p>
+        </div>
+
+        <div class="action-buttons-container">
+            <button id="refresh-all-btn" class="refresh-btn">
+                <span class="refresh-icon">🔄</span>
+                Refresh All Prices
+            </button>
+        </div>
+
+        <!-- Portfolio History Chart -->
+        <div class="chart-container">
+            <h3 class="chart-title">Portfolio History</h3>
+            <canvas id="portfolio-chart"></canvas>
+        </div>
+
+        <!-- Data Management Section -->
+        <div class="data-management-section">
+            <button id="clear-all-data-btn" class="clear-data-btn">
+                <span class="clear-icon">🗑️</span>
+                Clear All Data
+            </button>
+        </div>
+
+        <!-- Historical Portfolio Modal -->
+        <div id="historical-portfolio-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modal-title">Portfolio Snapshot</h3>
+                    <button class="modal-close" onclick="closeHistoricalPortfolio()">&times;</button>
+                </div>
+                <div id="modal-body" class="modal-body">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmation Modal -->
+        <div id="confirmation-modal" class="modal" style="display: none;">
+            <div class="modal-content confirmation-modal-content">
+                <div class="modal-header">
+                    <h3 id="confirmation-title">Confirm Action</h3>
+                    <button class="modal-close" onclick="closeConfirmationModal()">&times;</button>
+                </div>
+                <div id="confirmation-body" class="modal-body">
+                    <p id="confirmation-message"></p>
+                    <div class="confirmation-buttons">
+                        <button id="confirm-yes-btn" class="danger-btn">Yes, Delete</button>
+                        <button id="confirm-no-btn" class="cancel-btn" onclick="closeConfirmationModal()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Data provided by Yahoo Finance</p>
+            <p class="api-note">Prices update automatically every 60 seconds</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
