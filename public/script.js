@@ -261,13 +261,10 @@ function savePortfolioHistory() {
     localStorage.setItem(PORTFOLIO_HISTORY_KEY, JSON.stringify(portfolioHistory));
 }
 
-// Calculate current stocks value (excluding cash and watch-only)
+// Calculate current stocks value (excluding cash)
 function calculateStocksValue() {
     let totalValueCAD = 0;
     watchlist.forEach(item => {
-        // Skip watch-only stocks
-        if (item.isWatchOnly) return;
-
         const stockData = currentStockData[item.symbol];
         const qty = parseInt(item.quantity) || 0;
 
@@ -605,7 +602,7 @@ async function addStockOrCash() {
                 return;
             }
 
-            watchlist.push({ symbol: inputUpper, quantity: 0, isWatchOnly: false });
+            watchlist.push({ symbol: inputUpper, quantity: 0 });
             saveWatchlist();
             addStockInput.value = ''; // Clear input
             renderStocks();
@@ -678,22 +675,22 @@ function loadWatchlist() {
 
         // Migrate from old format (array of strings) to new format (array of objects)
         if (parsed.length > 0 && typeof parsed[0] === 'string') {
-            watchlist = parsed.map(symbol => ({ symbol, quantity: 0, isWatchOnly: true }));
+            watchlist = parsed.map(symbol => ({ symbol, quantity: 0 }));
             saveWatchlist();
         } else {
-            // Ensure isWatchOnly and pinned fields exist (backward compatibility)
+            // Ensure pinned field exists (backward compatibility)
             watchlist = parsed.map(item => ({
-                ...item,
-                isWatchOnly: item.isWatchOnly !== undefined ? item.isWatchOnly : false,
+                symbol: item.symbol,
+                quantity: item.quantity !== undefined ? item.quantity : 0,
                 pinned: item.pinned !== undefined ? item.pinned : false
             }));
         }
     } else {
         // Default watchlist with quantity 0
         watchlist = [
-            { symbol: 'TSLA', quantity: 0, isWatchOnly: false },
-            { symbol: 'AAPL', quantity: 0, isWatchOnly: false },
-            { symbol: 'MSFT', quantity: 0, isWatchOnly: false }
+            { symbol: 'TSLA', quantity: 0 },
+            { symbol: 'AAPL', quantity: 0 },
+            { symbol: 'MSFT', quantity: 0 }
         ];
         saveWatchlist();
     }
@@ -800,9 +797,6 @@ function updatePortfolioSummary() {
     let totalChangeCAD = 0;
 
     watchlist.forEach(item => {
-        // Skip watch-only stocks
-        if (item.isWatchOnly) return;
-
         const stockData = currentStockData[item.symbol];
         const qty = parseInt(item.quantity) || 0;
 
@@ -1015,7 +1009,6 @@ function createStockRow(stock, watchlistItem) {
 
     // Ensure quantity is a number
     const qty = parseInt(watchlistItem.quantity) || 0;
-    const isWatchOnly = watchlistItem.isWatchOnly || false;
     const isUSD = isUSDStock(stock.symbol);
     const holdingValueUSD = stock.price * qty;
     const holdingValueCAD = holdingValueUSD * usdCadRate;
@@ -1087,7 +1080,6 @@ function createStockRow(stock, watchlistItem) {
         <td class="${colorClass}">${changeSign}$${stock.change.toFixed(2)}</td>
         <td class="${colorClass}">${changeSign}${stock.changePercent.toFixed(2)}%</td>
         <td class="quantity-cell">
-            ${isWatchOnly ? '-' : `
             <input
                 type="number"
                 class="quantity-input-field"
@@ -1095,7 +1087,7 @@ function createStockRow(stock, watchlistItem) {
                 min="0"
                 step="1"
                 onchange="updateQuantity('${stock.symbol}', this.value)"
-            />`}
+            />
         </td>
         <td class="holdings-cell">${holdingsHTML}</td>
         <td class="high-low-cell">${highLowHTML}</td>
@@ -1160,7 +1152,6 @@ function createCashPocketRow(pocket) {
 function createMobileStockCard(stock, watchlistItem) {
     const card = document.createElement('div');
     const qty = watchlistItem.quantity || 0;
-    const isWatchOnly = watchlistItem.isWatchOnly || false;
     const isPinned = watchlistItem.pinned || false;
     const isUSD = isUSDStock(stock.symbol);
 
@@ -1241,7 +1232,6 @@ function createMobileStockCard(stock, watchlistItem) {
             </div>
         </div>
 
-        ${!isWatchOnly ? `
         <div class="card-quantity-section">
             <div class="card-quantity-row">
                 <span class="card-quantity-label">Update Quantity:</span>
@@ -1258,7 +1248,6 @@ function createMobileStockCard(stock, watchlistItem) {
                 </div>
             </div>
         </div>
-        ` : ''}
 
         <div class="card-actions">
             <button class="pin-btn ${isPinned ? 'pinned' : ''}" onclick="togglePin('${stock.symbol}')" title="${isPinned ? 'Unpin' : 'Pin to top'}">

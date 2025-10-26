@@ -1484,51 +1484,57 @@ footer p {
     .card-header {
         display: flex;
         justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: 14px;
+        align-items: center;
+        margin-bottom: 12px;
         padding-bottom: 0;
     }
 
     .card-symbol {
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        gap: 3px;
+        flex: 1;
     }
 
     .card-symbol-name {
-        font-size: 1.2rem;
+        font-size: 1.15rem;
         font-weight: 700;
         color: #1e293b;
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 5px;
     }
 
     .card-symbol-subtext {
-        font-size: 0.7rem;
+        font-size: 0.68rem;
         color: #64748b;
+        font-weight: 500;
     }
 
     .card-price-section {
         text-align: right;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 3px;
     }
 
     .card-price {
-        font-size: 1.4rem;
+        font-size: 1.35rem;
         font-weight: 700;
         color: #1e293b;
-        margin-bottom: 3px;
+        line-height: 1;
     }
 
     .card-change-row {
         display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 2px;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
     }
 
     .card-change {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         font-weight: 600;
     }
 
@@ -1541,10 +1547,11 @@ footer p {
     }
 
     .card-percent {
-        font-size: 0.8rem;
-        padding: 2px 8px;
-        border-radius: 6px;
+        font-size: 0.75rem;
+        padding: 2px 6px;
+        border-radius: 4px;
         font-weight: 600;
+        line-height: 1;
     }
 
     .card-percent.positive {
@@ -1567,15 +1574,18 @@ footer p {
     .card-detail-item {
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        gap: 5px;
+        background: #f8fafc;
+        padding: 10px 12px;
+        border-radius: 8px;
     }
 
     .card-detail-label {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         color: #64748b;
         font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.3px;
     }
 
     .card-detail-value {
@@ -1596,59 +1606,61 @@ footer p {
     }
 
     .card-quantity-section {
-        background: #f8fafc;
+        background: #fff;
         border-radius: 10px;
-        padding: 10px;
-        margin-bottom: 12px;
+        padding: 0;
+        margin-bottom: 10px;
+        border: 1px solid #e5e7eb;
     }
 
     .card-quantity-row {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
+        padding: 10px 12px;
     }
 
     .card-quantity-label {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         font-weight: 600;
         color: #475569;
+        flex-shrink: 0;
     }
 
     .card-quantity-input {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
+        margin-left: auto;
     }
 
     .quantity-input-field {
-        width: 70px;
-        padding: 8px 12px;
-        font-size: 1rem;
+        width: 60px;
+        padding: 7px 10px;
+        font-size: 0.95rem;
         border: 2px solid #e2e8f0;
-        border-radius: 8px;
+        border-radius: 6px;
         font-weight: 600;
         text-align: center;
     }
 
     .update-btn {
-        padding: 8px 16px;
-        font-size: 0.85rem;
-        border-radius: 8px;
+        padding: 7px 14px;
+        font-size: 0.8rem;
+        border-radius: 6px;
         font-weight: 600;
     }
 
     .card-actions {
         display: flex;
         gap: 8px;
-        justify-content: space-between;
     }
 
     .remove-btn, .pin-btn {
         flex: 1;
-        padding: 10px 16px;
-        font-size: 0.9rem;
-        border-radius: 10px;
+        padding: 9px 14px;
+        font-size: 0.85rem;
+        border-radius: 8px;
         font-weight: 600;
     }
 
