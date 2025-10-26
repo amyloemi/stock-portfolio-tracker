@@ -1386,74 +1386,221 @@ footer p {
 }
 
 @media (max-width: 768px) {
+    body {
+        padding: 15px 10px;
+    }
+
+    .container {
+        max-width: 100%;
+    }
+
     header h1 {
         font-size: 2rem;
     }
 
-    .portfolio-value-display {
-        font-size: 2.5rem;
+    /* Portfolio Summary - Mobile */
+    .portfolio-summary {
+        padding: 20px 16px;
+        border-radius: 16px;
     }
 
+    .portfolio-value-display {
+        font-size: 2.2rem;
+    }
+
+    #portfolio-currency-label {
+        font-size: 1.2rem;
+    }
+
+    .portfolio-change {
+        font-size: 1rem;
+    }
+
+    .portfolio-breakdown {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding-top: 16px;
+        margin-top: 16px;
+    }
+
+    .breakdown-item {
+        padding: 10px 12px;
+    }
+
+    .breakdown-value {
+        font-size: 1.3rem;
+    }
+
+    /* Chart - Mobile */
     .chart-container {
-        padding: 15px;
+        padding: 20px 15px;
+        border-radius: 16px;
     }
 
     .chart-title {
-        font-size: 1.1rem;
+        font-size: 1rem;
         margin-bottom: 15px;
     }
 
     #portfolio-chart {
-        max-height: 250px;
+        max-height: 220px;
     }
 
-    .add-stock-section {
-        flex-direction: column;
-    }
-
-    .input-group {
-        width: 100%;
-        flex-direction: column;
-    }
-
-    #stock-symbol-input, #quantity-input {
-        width: 100%;
-    }
-
-    #quantity-input {
-        min-width: unset;
+    /* Table - Mobile */
+    .stocks-table-container {
+        border-radius: 16px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .stocks-table {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
+        min-width: 800px;
     }
 
     .stocks-table th,
     .stocks-table td {
-        padding: 8px 6px;
+        padding: 10px 6px;
+        white-space: nowrap;
+    }
+
+    .stocks-table th:first-child,
+    .stocks-table td:first-child {
+        padding-left: 12px;
+        position: sticky;
+        left: 0;
+        background: white;
+        z-index: 5;
+    }
+
+    .stocks-table thead th:first-child {
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    }
+
+    .stocks-table tbody tr:nth-child(even) td:first-child {
+        background-color: rgba(248, 250, 252, 0.5);
+    }
+
+    .cash-row td:first-child {
+        background: linear-gradient(135deg, #f0f9f4 0%, #e8f5e9 100%) !important;
     }
 
     .symbol-cell {
-        font-size: 0.95rem;
+        font-size: 0.85rem;
+        min-width: 90px;
+    }
+
+    .price-cell {
+        font-size: 0.75rem;
     }
 
     .quantity-input-field {
-        width: 60px;
-        padding: 4px 5px;
-        font-size: 0.8rem;
+        width: 50px;
+        padding: 4px 6px;
+        font-size: 0.75rem;
     }
 
-    .remove-btn {
-        padding: 5px 10px;
-        font-size: 0.8rem;
+    .remove-btn, .update-btn, .pin-btn {
+        padding: 6px 10px;
+        font-size: 0.7rem;
     }
 
     .high-low-cell {
-        font-size: 0.75rem;
-        min-width: 140px;
+        font-size: 0.7rem;
+        min-width: 120px;
     }
 
-    .cad-value-small {
-        font-size: 0.7rem;
+    .high-low-values {
+        gap: 2px;
+    }
+
+    .percent-change {
+        font-size: 0.65rem;
+    }
+
+    .cad-value, .cad-value-small {
+        font-size: 0.65rem;
+    }
+
+    .dual-currency {
+        font-size: 0.75rem;
+        gap: 2px;
+    }
+
+    /* Add Stock Form - Mobile */
+    .add-stock-form {
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px;
+    }
+
+    .add-stock-input {
+        width: 100%;
+        padding: 10px 14px;
+        font-size: 0.9rem;
+    }
+
+    .add-stock-btn {
+        width: 100%;
+        padding: 12px 20px;
+    }
+
+    .tips-row .info-text {
+        font-size: 0.75rem;
+        padding: 6px;
+    }
+
+    /* Buttons - Mobile */
+    .refresh-btn {
+        padding: 12px 24px;
+        font-size: 0.9rem;
+    }
+
+    .action-buttons-container {
+        margin-bottom: 15px;
+    }
+
+    /* Modal - Mobile */
+    .modal-content {
+        width: 95%;
+        max-height: 85vh;
+        border-radius: 12px;
+    }
+
+    .modal-header {
+        padding: 16px 18px;
+    }
+
+    .modal-header h3 {
+        font-size: 1.1rem;
+    }
+
+    .modal-body {
+        padding: 18px;
+    }
+
+    .snapshot-table {
+        font-size: 0.8rem;
+    }
+
+    .snapshot-table th,
+    .snapshot-table td {
+        padding: 8px 6px;
+    }
+
+    /* Data Management - Mobile */
+    .clear-data-btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
+
+    /* Footer - Mobile */
+    footer {
+        margin-top: 30px;
+        font-size: 0.8rem;
+    }
+
+    .api-note {
+        font-size: 0.75rem;
     }
 }
