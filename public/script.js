@@ -997,13 +997,8 @@ function createStockRow(stock, watchlistItem) {
     let holdingsHTML = '';
     if (qty > 0) {
         if (isUSD) {
-            // Show both USD and CAD
-            holdingsHTML = `
-                <div class="dual-currency">
-                    <div>$${holdingValueUSD.toFixed(2)} USD</div>
-                    <div class="cad-value">$${holdingValueCAD.toFixed(2)} CAD</div>
-                </div>
-            `;
+            // Show both USD and CAD on same line
+            holdingsHTML = `$${holdingValueUSD.toFixed(2)} USD <span class="cad-value-small">($${holdingValueCAD.toFixed(2)} CAD)</span>`;
         } else {
             // Show only CAD
             holdingsHTML = `$${holdingValueUSD.toFixed(2)} CAD`;

@@ -1420,6 +1420,8 @@ footer p {
     .portfolio-value-display {
         font-size: 2.2rem;
         text-align: center;
+        display: block;
+        width: 100%;
     }
 
     #portfolio-currency-label {
@@ -1429,6 +1431,8 @@ footer p {
     .portfolio-change {
         font-size: 1rem;
         text-align: center;
+        display: block;
+        width: 100%;
     }
 
     .portfolio-breakdown {
@@ -1760,14 +1764,15 @@ footer p {
 
     /* Buttons - Mobile */
     .refresh-btn {
-        padding: 12px 24px;
+        padding: 14px 28px;
         font-size: 0.9rem;
-        width: 100%;
-        max-width: 280px;
+        width: calc(100% - 32px);
+        max-width: 320px;
+        margin: 0 auto;
     }
 
     .action-buttons-container {
-        margin-bottom: 15px;
+        margin: 0 16px 20px 16px;
         display: flex;
         justify-content: center;
     }
